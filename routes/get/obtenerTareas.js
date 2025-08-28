@@ -1,3 +1,4 @@
+// routes/get/obtenerTareas.js
 const db = require('../../config/database');
 const express = require('express');
 const router = express.Router();
@@ -12,7 +13,6 @@ router.get('/tareas', async (req, res) => {
                 estado_tarea,
                 fecha_asignada,
                 fecha_entrega,
-                estado_artivado,
                 usuario_id
             FROM tareas
         `);

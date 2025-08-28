@@ -6,16 +6,14 @@ const app = express();
 
 // Configurar CORS para permitir múltiples orígenes
 const allowedOrigins = [
-  'http://127.0.0.1:5500',      // Live Server local
-  'http://localhost:5500',      // Live Server alternativo
-  'https://kristhellfp.github.io' // Reemplaza con tu usuario de GitHub
+  'http://127.0.0.1:5500',
+  'http://localhost:5500',
+  'https://kristhellfp.github.io'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Permitir requests sin origen (como apps móviles o Postman)
     if (!origin) return callback(null, true);
-    
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
@@ -27,11 +25,12 @@ app.use(cors({
 
 app.use(express.json());
 
+// Prefijar todas las rutas con /api
 const getTablas = require('./routes/get/obtenerTablas');
-app.use(getTablas);
+app.use('/api', getTablas);
 
 const getTareas = require('./routes/get/obtenerTareas');
-app.use(getTareas);
+app.use('/api', getTareas);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
